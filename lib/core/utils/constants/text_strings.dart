@@ -22,6 +22,11 @@ class TTexts {
   static const String tLoginNewAcc = "تسجيل حساب جديد";
   static const String tLoginLicince = "بتسجيل الدخول، أوافق على شروط الخدمة وإرشادات المجتمع وقرأت سياسة الخصوصية.";
 
+  static const String tHome = "الرئيسية";
+  static const String tCalender = "التقويم";
+  static const String tReports = "التقارير";
+  static const String tSupscription = "الاشتراكات";
+  static const String tSetting = "الاعدادات";
 
 }
 

@@ -3,18 +3,17 @@ import 'package:fared_task/core/utils/constants/colors.dart';
 import 'package:fared_task/core/utils/constants/sizes.dart';
 import 'package:fared_task/features/auth/login/presentation/widget/social_media_btn.dart';
 import 'package:fared_task/features/auth/login/presentation/widget/texts_row.dart';
-import 'package:fared_task/features/calender/calender_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:provider/provider.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../../../../core/utils/constants/text_strings.dart';
 import '../../../../../core/utils/helpers/spacing.dart';
 import '../../../../../core/utils/theming/styles.dart';
-import '../../providers/login_provider.dart';
+import '../../cubit/login_cubit.dart';
+import '../../cubit/login_state.dart';
 import '../widget/line_with_text.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -31,17 +30,30 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => LoginProvider(),
-      child: Directionality(
-        textDirection: TextDirection.rtl,
-        child: Scaffold(
-          backgroundColor: TColors.white,
-          body: Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: TSizes.lg, vertical: TSizes.xl),
-            child: Consumer<LoginProvider>(
-              builder: (context, provider, child) {
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: Scaffold(
+        backgroundColor: TColors.white,
+        body: Padding(
+          padding: EdgeInsets.symmetric(horizontal: TSizes.lg, vertical: TSizes.xl),
+          child: BlocProvider(
+            create: (context) => LoginCubit(context.read()),
+            child: BlocConsumer<LoginCubit, LoginState>(
+              listener: (context, state) {
+                if (state is LoginSuccess) {
+                  Navigator.pushReplacementNamed(context, '/homePage');
+                } else if (state is LoginFailure) {
+
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text("Login Failure")),
+                  );
+                }
+              },
+              builder: (context, state) {
+                if (state is LoginLoading) {
+                  return Center(child: CircularProgressIndicator());
+                }
+
                 return ListView(
                   children: [
                     Row(
@@ -86,13 +98,11 @@ class _LoginScreenState extends State<LoginScreen> {
                           borderSide: BorderSide.none,
                         ),
                         hintText: TTexts.loginEmail,
-                        errorText: provider.emailError,
                         hintStyle: TextStyle(
                           color: TColors.iconColors,
                         ),
                         contentPadding: EdgeInsets.symmetric(
-                            vertical: 16.0,
-                            horizontal: 12.0),
+                            vertical: 16.0, horizontal: 12.0),
                       ),
                       keyboardType: TextInputType.emailAddress,
                     ),
@@ -107,7 +117,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         filled: true,
                         fillColor: TColors.headerBackground,
-                        errorText: provider.passwordError,
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8.0),
                           borderSide: BorderSide.none,
@@ -129,25 +138,19 @@ class _LoginScreenState extends State<LoginScreen> {
                             });
                           },
                         ),
-                        contentPadding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 12.0),
+                        contentPadding: EdgeInsets.symmetric(
+                            vertical: 16.0, horizontal: 12.0),
                       ),
                       keyboardType: TextInputType.visiblePassword,
                     ),
                     verticalSpace(TSizes.sm),
-
                     Text(
                       TTexts.loginForgetPassword,
                       style: TextStyles.font16BlackBold,
                     ),
                     verticalSpace(TSizes.xl),
-
-                    provider.isLoading
-                        ?     LoadingAnimationWidget.staggeredDotsWave(
-                      color: TColors.loading_splash,
-                      size: 24.sp,
-                    )
-                        : Bounce(
-                      onTap:() async {
+                    Bounce(
+                      onTap: () async {
                         // Validation for empty fields
                         if (_emailController.text.isEmpty) {
                           Fluttertoast.showToast(
@@ -172,27 +175,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           );
                           return;
                         }
-
-                        final success = await provider.login(
-                          _emailController.text,
-                          _passwordController.text,
-                        );
-                        if (success) {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (_) => CalenderScreen()),
-                          );
-                        } else {
-                          Fluttertoast.showToast(
-                            msg: provider.generalError ?? "Login failed. Please try again.",
-                            toastLength: Toast.LENGTH_SHORT,
-                            gravity: ToastGravity.BOTTOM,
-                            backgroundColor: Colors.red,
-                            textColor: Colors.white,
-                            fontSize: 16.0,
-                          );
-                        }
+                        final username = _emailController.text.trim();
+                        final password = _passwordController.text.trim();
+                        context.read<LoginCubit>().login(username, password);
                       },
                       child: Container(
                         decoration: BoxDecoration(
@@ -224,14 +209,21 @@ class _LoginScreenState extends State<LoginScreen> {
                     verticalSpace(TSizes.lg),
                     LineTextLine(),
                     verticalSpace(TSizes.lg),
-                    SocialMediaBtn(iconPath: "assets/icons/apple.svg", text: TTexts.loginWithApple, onTap: (){}),
+                    SocialMediaBtn(
+                        iconPath: "assets/icons/apple.svg",
+                        text: TTexts.loginWithApple,
+                        onTap: () {}),
                     verticalSpace(TSizes.smX),
-                    SocialMediaBtn(iconPath: "assets/icons/google.svg", text:  TTexts.loginWithGoogle, onTap: (){}),
+                    SocialMediaBtn(
+                        iconPath: "assets/icons/google.svg",
+                        text: TTexts.loginWithGoogle,
+                        onTap: () {}),
                     verticalSpace(TSizes.smX),
                     DualTextRow(),
                     verticalSpace(TSizes.smX),
-                    Text(TTexts.tLoginLicince,
-                    style: TextStyles.font14Light2GreyRegular,
+                    Text(
+                      TTexts.tLoginLicince,
+                      style: TextStyles.font14Light2GreyRegular,
                       textAlign: TextAlign.center,
                     )
                   ],

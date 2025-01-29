@@ -43,8 +43,16 @@ class TColors {
   static const Color white = Color(0xFFFFFFFF);
 
 
+  static const Color inglue = Color(0xFF887EF9);
+
   static const Color loading_splash = Color(0xFFFCD34D);
   static const Color iconColors = Color(0xFF9CA3AF);
+
+  static const Color iconSelect =const Color(0XFF0686F8);
+  static const Color color = const Color(0XFF7AC0FF);
+  static const Color color2 = const Color(0XFF96B1FD);
+  static const Color bgColor = const  Color(0XFF1752FE);
+
 
 }
 

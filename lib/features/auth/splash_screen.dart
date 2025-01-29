@@ -1,11 +1,13 @@
 import 'package:fared_task/core/utils/constants/colors.dart';
 import 'package:fared_task/core/utils/constants/sizes.dart';
+import 'package:fared_task/features/auth/home/presentation/ui/home_screen.dart';
 import 'package:fared_task/features/auth/onboarding_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
+import '../../core/local_data/shared_preferance.dart';
 import '../../core/utils/helpers/spacing.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -16,23 +18,46 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+
+
   @override
   void initState() {
     super.initState();
+    _checkLoginStatus();
+  }
 
+  Future<void> _checkLoginStatus() async {
+    final token = await getAccessToken();
+
+   // print("Checking token: ${token}");
     Future.delayed(Duration(seconds: 3), () {
-      Navigator.pushReplacement(
-        context,
-        PageRouteBuilder(
-          transitionDuration: Duration(milliseconds: 600),
-          pageBuilder: (_, __, ___) => OnboardingScreen(),
-          transitionsBuilder: (_, animation, __, child) {
-            return FadeTransition(opacity: animation, child: child);
-          },
-        ),
-      );
+      if (token != null && token.isNotEmpty) {
+        Navigator.pushReplacement(
+          context,
+          PageRouteBuilder(
+            transitionDuration: Duration(milliseconds: 600),
+            pageBuilder: (_, __, ___) => HomeScreen(),
+            transitionsBuilder: (_, animation, __, child) {
+              return FadeTransition(opacity: animation, child: child);
+            },
+          ),
+        );
+      } else {
+
+        Navigator.pushReplacement(
+          context,
+          PageRouteBuilder(
+            transitionDuration: Duration(milliseconds: 600),
+            pageBuilder: (_, __, ___) => OnboardingScreen(),
+            transitionsBuilder: (_, animation, __, child) {
+              return FadeTransition(opacity: animation, child: child);
+            },
+          ),
+        );
+      }
     });
   }
+
 
   @override
   Widget build(BuildContext context) {
