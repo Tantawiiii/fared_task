@@ -1,6 +1,5 @@
 import 'package:fared_task/core/utils/constants/colors.dart';
 import 'package:fared_task/core/utils/constants/sizes.dart';
-import 'package:fared_task/features/auth/home/presentation/ui/home_screen.dart';
 import 'package:fared_task/features/auth/onboarding_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,6 +8,7 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import '../../core/local_data/shared_preferance.dart';
 import '../../core/utils/helpers/spacing.dart';
+import '../home/presentation/ui/home_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

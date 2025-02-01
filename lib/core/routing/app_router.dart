@@ -1,8 +1,8 @@
 import 'package:fared_task/features/auth/onboarding_screen.dart';
 import 'package:fared_task/features/auth/splash_screen.dart';
 import 'package:flutter/material.dart';
-import '../../features/auth/home/presentation/ui/home_screen.dart';
 import '../../features/auth/login/presentation/ui/login_screen.dart';
+import '../../features/home/presentation/ui/home_screen.dart';
 import 'routes.dart';
 
 class AppRouter {

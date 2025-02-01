@@ -92,7 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           color: TColors.iconColors,
                         ),
                         filled: true,
-                        fillColor: TColors.headerBackground,
+                        fillColor: TColors.fillEditText,
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8.0),
                           borderSide: BorderSide.none,
@@ -116,7 +116,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           color: TColors.iconColors,
                         ),
                         filled: true,
-                        fillColor: TColors.headerBackground,
+                        fillColor: TColors.fillEditText,
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8.0),
                           borderSide: BorderSide.none,

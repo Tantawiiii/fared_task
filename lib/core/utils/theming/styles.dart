@@ -40,6 +40,18 @@ class TextStyles {
     color: Colors.white,
   );
 
+  static TextStyle font18WhiteExtraBold = TextStyle(
+    fontSize: 18.sp,
+    fontWeight: FontWeightHelper.extraBold,
+    color: Colors.white,
+  );
+
+  static TextStyle font20BlackExtraBold = TextStyle(
+    fontSize: 20.sp,
+    fontWeight: FontWeightHelper.extraBold,
+    color: Colors.black,
+  );
+
   static TextStyle font36WhiteMedium = TextStyle(
     fontSize: 36.sp,
     fontWeight: FontWeightHelper.medium,
@@ -100,6 +112,12 @@ class TextStyles {
     color: Colors.white,
   );
 
+  static TextStyle font14WhiteBold = TextStyle(
+    fontSize: 14.sp,
+    fontWeight: FontWeightHelper.bold,
+    color: Colors.white,
+  );
+
   static TextStyle font14LightGreyRegular = TextStyle(
     fontSize: 14.sp,
     fontWeight: FontWeightHelper.regular,
@@ -120,6 +138,12 @@ class TextStyles {
   static TextStyle font14BlackMedium = TextStyle(
     fontSize: 14.sp,
     fontWeight: FontWeightHelper.medium,
+    color: TColors.black,
+  );
+
+  static TextStyle font14BlackBold = TextStyle(
+    fontSize: 14.sp,
+    fontWeight: FontWeightHelper.bold,
     color: TColors.black,
   );
 
@@ -181,5 +205,17 @@ class TextStyles {
     fontSize: 16.sp,
     fontWeight: FontWeightHelper.regular,
     color: Colors.white,
+  );
+
+  static TextStyle font12WhiteRegular = TextStyle(
+    fontSize: 12.sp,
+    fontWeight: FontWeightHelper.regular,
+    color: Colors.white,
+  );
+
+  static TextStyle font12WhiteBlack = TextStyle(
+    fontSize: 12.sp,
+    fontWeight: FontWeightHelper.regular,
+    color: Colors.black,
   );
 }

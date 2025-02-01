@@ -27,6 +27,10 @@ class TTexts {
   static const String tReports = "التقارير";
   static const String tSupscription = "الاشتراكات";
   static const String tSetting = "الاعدادات";
+  static const String tWelcomeBack = "اهلا بك وبعودتك";
+
+
+
 
 }
 

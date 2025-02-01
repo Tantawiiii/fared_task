@@ -16,8 +16,13 @@ class TColors {
   static const Color light = Color(0xFFF6F6F6);
   static const Color dark = Color(0xFF272727);
   static const Color primaryBackground = Color(0xFF11071F);
-  static const Color headerBackground = Color(0xFFF9FAFB);
+  static const Color headerBackground = Color(0xFF2E1C61);
+  static const Color circleBackground = Color(0xFF6E62B6);
+  static const Color fillEditText = Color(0xFFF9FAFB);
 
+  static const Color fillBackgroundStudentSection = Color(0xFFF9FAFB);
+  static const Color fillBackgroundSessionsSection = Color(0xFFF9F9FD);
+  static const Color fillBackgroundRow = Color(0x1FD32F2F);
 
   // Button colors
   static const Color buttonPrimary = Color(0xFF2F83FE);
@@ -25,6 +30,7 @@ class TColors {
   // Border colors
   static const Color borderPrimary = Color(0xFFE5E7EB);
   static const Color borderSecondary = Color(0xFFE6E6E6);
+  static const Color borderSessionInfo = Color(0xFFE9E9E9);
 
   // Error and validation colors
   static const Color error = Color(0xFFD32F2F);
