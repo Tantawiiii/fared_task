@@ -3,8 +3,8 @@ import 'package:fared_task/core/utils/helpers/spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class SubscribtionCard extends StatelessWidget {
-  const SubscribtionCard({super.key});
+class SubscriptionCard extends StatelessWidget {
+  const SubscriptionCard({super.key});
 
   @override
   Widget build(BuildContext context) {

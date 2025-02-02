@@ -1,15 +1,14 @@
-import 'package:fared_task/features/home/presentation/widget/secssion_card_widget.dart';
 import 'package:fared_task/features/home/presentation/widget/subscribtion_card_widget.dart';
 import 'package:flutter/material.dart';
 
-class SubscribtionSection extends StatefulWidget {
-  const SubscribtionSection({super.key});
+class SubscriptionSection extends StatefulWidget {
+  const SubscriptionSection({super.key});
 
   @override
-  _SubscribtionSectionState createState() => _SubscribtionSectionState();
+  _SubscriptionSectionState createState() => _SubscriptionSectionState();
 }
 
-class _SubscribtionSectionState extends State<SubscribtionSection> {
+class _SubscriptionSectionState extends State<SubscriptionSection> {
   final PageController _pageController = PageController();
   int _currentPage = 0;
 
@@ -29,7 +28,7 @@ class _SubscribtionSectionState extends State<SubscribtionSection> {
               });
             },
             itemBuilder: (context, index) {
-              return SubscribtionCard();
+              return SubscriptionCard();
             },
           ),
         ),

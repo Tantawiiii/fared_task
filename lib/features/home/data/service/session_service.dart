@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:fared_task/core/local_data/shared_preferance.dart';
 import 'package:flutter/foundation.dart';
 import '../../../../core/networking/api_constants.dart';
 import '../model/session_model.dart';
@@ -16,7 +17,17 @@ class SessionService {
 
   Future<List<Session>> fetchSessions() async {
     try {
-      final response = await _dio.get(tSessionKey);
+
+      // Get the access token
+      final token = await getAccessToken();
+
+      if (token == null) {
+        throw Exception("Access token not found");
+      }
+
+      final options = Options(headers: {'Authorization': 'Bearer $token'});
+
+      final response = await _dio.get(tSessionKey, options: options);
       if (kDebugMode) {
         print("API Response: ${response.data}");
       }
