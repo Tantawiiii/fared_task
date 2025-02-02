@@ -1,13 +1,13 @@
 
+import '../../data/model/login_model.dart';
 import '../../data/repository/login_repo.dart';
-import 'package:dartz/dartz.dart';
 
 class LoginUseCase {
-  final AuthRepository _repository;
+  final AuthRepository repository;
 
-  LoginUseCase(this._repository);
+  LoginUseCase(this.repository);
 
-  Future<Either<String, String>> execute(String username, String password) {
-    return _repository.login(username, password);
+  Future<AuthResponse> execute(String email, String password) {
+    return repository.authenticate(email, password);
   }
 }

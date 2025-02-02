@@ -1,15 +1,17 @@
-abstract class LoginState {}
+import '../data/model/login_model.dart';
 
-class LoginInitial extends LoginState {}
+abstract class AuthState {}
 
-class LoginLoading extends LoginState {}
+class AuthInitial extends AuthState {}
 
-class LoginSuccess extends LoginState {
-  final String token;
-  LoginSuccess(this.token);
+class AuthLoading extends AuthState {}
+
+class AuthSuccess extends AuthState {
+  final AuthResponse authResponse;
+  AuthSuccess(this.authResponse);
 }
 
-class LoginFailure extends LoginState {
-  final String error;
-  LoginFailure(this.error);
+class AuthFailure extends AuthState {
+  final String message;
+  AuthFailure(this.message);
 }

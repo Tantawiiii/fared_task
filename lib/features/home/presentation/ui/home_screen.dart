@@ -7,6 +7,7 @@ import 'package:fared_task/features/home/presentation/widget/custom_calender_row
 import 'package:fared_task/features/home/presentation/widget/header_widget.dart';
 import 'package:flutter/material.dart';
 import '../../../../../core/utils/constants/text_strings.dart';
+import '../../../../core/local_data/shared_preferance.dart';
 import '../../../../core/utils/theming/styles.dart';
 import '../widget/my_children_widget.dart';
 import '../widget/subscribtion_section.dart';
@@ -43,8 +44,23 @@ class _HomeScreenState extends State<HomeScreen> {
       TabItem(
         icon: Icons.settings_outlined,
         title: TTexts.tSetting,
+
       ),
     ];
+
+
+    void _onTabSelected(int index) async {
+      if (index == 4) {
+        await clearAccessToken();
+        if (!mounted) return;
+        Navigator.pushReplacementNamed(context, '/login');
+      } else {
+        setState(() {
+          visit = index;
+        });
+      }
+    }
+
 
     return Directionality(
       textDirection: TextDirection.rtl,
@@ -191,9 +207,7 @@ class _HomeScreenState extends State<HomeScreen> {
           colorSelected: TColors.iconSelect,
           indexSelected: visit,
           paddingVertical: 24,
-          onTap: (int index) => setState(() {
-            visit = index;
-          }),
+          onTap:_onTabSelected,
         ),
       ),
     );

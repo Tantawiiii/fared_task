@@ -147,6 +147,12 @@ class TextStyles {
     color: TColors.black,
   );
 
+  static TextStyle font12GreenBold = TextStyle(
+    fontSize: 12.sp,
+    fontWeight: FontWeightHelper.bold,
+    color: TColors.textGreen,
+  );
+
   static TextStyle font24LightgreyRegular = TextStyle(
     fontSize: 24.sp,
     fontWeight: FontWeightHelper.regular,
@@ -217,5 +223,11 @@ class TextStyles {
     fontSize: 12.sp,
     fontWeight: FontWeightHelper.regular,
     color: Colors.black,
+  );
+
+  static TextStyle font12gray = TextStyle(
+    fontSize: 12.sp,
+    fontWeight: FontWeightHelper.regular,
+    color: TColors.textGray,
   );
 }

@@ -1,14 +1,22 @@
-class LoginRequest {
-  final String username;
-  final String password;
+class AuthResponse {
+  final String accessToken;
+  final String encryptedAccessToken;
+  final int expireInSeconds;
+  final int userId;
 
-  LoginRequest(this.username, this.password);
+  AuthResponse({
+    required this.accessToken,
+    required this.encryptedAccessToken,
+    required this.expireInSeconds,
+    required this.userId,
+  });
 
-  Map<String, dynamic> toJson() {
-    return {
-      "userNameOrEmailAddress": username,
-      "password": password,
-      "rememberClient": true,
-    };
+  factory AuthResponse.fromJson(Map<String, dynamic> json) {
+    return AuthResponse(
+      accessToken: json["accessToken"],
+      encryptedAccessToken: json["encryptedAccessToken"],
+      expireInSeconds: json["expireInSeconds"],
+      userId: json["userId"],
+    );
   }
 }

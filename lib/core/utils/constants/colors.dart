@@ -9,8 +9,10 @@ class TColors {
   // Text colors
   static const Color textPrimary = Color(0xFF333333);
   static const Color textSecondary = Color(0xFF6C757D);
+  static const Color textGray = Color(0xFF636366);
   static const Color textWhite = Colors.white;
   static const Color textDarkBlue = Color(0xFF1F2937);
+  static const Color textGreen = Color(0xFF22C55E);
 
   // Background colors
   static const Color light = Color(0xFFF6F6F6);
@@ -19,6 +21,7 @@ class TColors {
   static const Color headerBackground = Color(0xFF2E1C61);
   static const Color circleBackground = Color(0xFF6E62B6);
   static const Color fillEditText = Color(0xFFF9FAFB);
+  static const Color fillContainer = Color(0xFFF9F9FD);
 
   static const Color fillBackgroundStudentSection = Color(0xFFF9FAFB);
   static const Color fillBackgroundSessionsSection = Color(0xFFF9F9FD);
