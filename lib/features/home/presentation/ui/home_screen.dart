@@ -2,6 +2,7 @@ import 'package:awesome_bottom_bar/awesome_bottom_bar.dart';
 import 'package:fared_task/core/utils/constants/colors.dart';
 import 'package:fared_task/core/utils/constants/sizes.dart';
 import 'package:fared_task/core/utils/helpers/spacing.dart';
+import 'package:fared_task/features/home/presentation/ui/report_section.dart';
 import 'package:fared_task/features/home/presentation/widget/custom_calender_row.dart';
 import 'package:fared_task/features/home/presentation/widget/header_widget.dart';
 import 'package:flutter/material.dart';
@@ -167,9 +168,15 @@ class _HomeScreenState extends State<HomeScreen> {
                             ],
                           ),
                           verticalSpace(14),
-                          SubscribtionSection(),
+                          SubscriptionSection(),
+
                         ],
                       ),
+                    ),
+                    verticalSpace(14),
+                    Container(
+                      color: TColors.fillBackgroundSessionsSection,
+                        child: ReportsSection(),
                     ),
                   ],
                 ),
