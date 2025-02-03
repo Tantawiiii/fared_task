@@ -1,4 +1,5 @@
 import 'package:bounce/bounce.dart';
+import 'package:fared_task/core/utils/constants/colors.dart';
 import 'package:fared_task/core/utils/helpers/spacing.dart';
 import 'package:fared_task/core/utils/theming/styles.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,7 @@ class CustomCalendarRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final today = DateTime.now();
     final weekDays = List.generate(7, (index) {
-      final day = today.subtract(Duration(days: today.weekday - index - 3));
+      final day = today.subtract(Duration(days: today.weekday - index +2));
       return {
         'day': _getArabicDayName(day),
         'date': DateFormat('d').format(day),
@@ -94,15 +95,14 @@ class CustomCalendarRow extends StatelessWidget {
                         final isSelected = day['isSelected'] == true;
                         return GestureDetector(
                           onTap: () {
-                            final formattedDate = DateFormat('d MMMM yyyy', 'ar').format(
-                                today.subtract(Duration(days: today.weekday - weekDays.indexOf(day) - 3))
-                            );
+                            final selectedDate = DateFormat('d MMMM yyyy', 'ar').format(DateTime.now().subtract(Duration(days: today.weekday - weekDays.indexOf(day) + 2)));
+
 
                             Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => DetailedScheduleScreen(
-                                  selectedDay: formattedDate,
+                                  selectedDay: selectedDate,
                                 ),
                               ),
                             );
@@ -116,23 +116,27 @@ class CustomCalendarRow extends StatelessWidget {
                                   color: isSelected ? Colors.blue : Colors.transparent,
                                   borderRadius: BorderRadius.circular(12),
                                 ),
-                                child: Column(
+                                child: Row(
                                   children: [
-                                    Text(
-                                      "${day['day']}",
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        color: isSelected ? Colors.white : Colors.grey,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    Text(
-                                      "${day['date']}",
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        color: isSelected ? Colors.white : Colors.black,
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                                    Column(
+                                      children: [
+                                        Text(
+                                          "${day['day']}",
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            color: isSelected ? Colors.white : Colors.grey,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        Text(
+                                          "${day['date']}",
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            color: isSelected ? Colors.white : Colors.black,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ],
                                 ),

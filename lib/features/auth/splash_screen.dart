@@ -29,7 +29,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> _checkLoginStatus() async {
     final token = await getAccessToken();
 
-    print("Checking token: ${token}");
+    print("Checking token: Done");
     Future.delayed(Duration(seconds: 3), () {
       if (token != null && token.isNotEmpty) {
         Navigator.pushReplacement(

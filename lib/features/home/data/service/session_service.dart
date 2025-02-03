@@ -18,9 +18,7 @@ class SessionService {
   Future<List<Session>> fetchSessions() async {
     try {
 
-      // Get the access token
       final token = await getAccessToken();
-
       if (token == null) {
         throw Exception("Access token not found");
       }

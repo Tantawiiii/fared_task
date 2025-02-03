@@ -18,6 +18,7 @@ class ReportCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(12),
+      margin: const EdgeInsets.symmetric(vertical: 12),
       width: 195,
       decoration: BoxDecoration(
         color: Colors.white,

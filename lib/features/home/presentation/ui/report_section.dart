@@ -62,13 +62,13 @@ class ReportsSection extends StatelessWidget {
           ),
 
         SizedBox(
-          height: 300,
+          height: 320,
           child: ListView.builder(
             itemCount: 3,
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
               return Padding(
-                padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 8),
+                padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 4),
                 child: SizedBox(
                   width: 220,
                   child: ReportCard(

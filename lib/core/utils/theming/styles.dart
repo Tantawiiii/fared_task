@@ -230,4 +230,10 @@ class TextStyles {
     fontWeight: FontWeightHelper.regular,
     color: TColors.textGray,
   );
+
+  static TextStyle font12BlackMedium = TextStyle(
+    fontSize: 12.sp,
+    fontWeight: FontWeightHelper.medium,
+    color: TColors.black,
+  );
 }

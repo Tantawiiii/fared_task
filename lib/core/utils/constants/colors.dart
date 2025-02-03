@@ -22,6 +22,7 @@ class TColors {
   static const Color circleBackground = Color(0xFF6E62B6);
   static const Color fillEditText = Color(0xFFF9FAFB);
   static const Color fillContainer = Color(0xFFF9F9FD);
+  static const Color fillContainerRating = Color(0xFFFFF4CD);
 
   static const Color fillBackgroundStudentSection = Color(0xFFF9FAFB);
   static const Color fillBackgroundSessionsSection = Color(0xFFF9F9FD);

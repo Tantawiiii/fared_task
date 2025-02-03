@@ -1,10 +1,14 @@
 import 'package:fared_task/core/utils/helpers/spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/utils/constants/colors.dart';
 import '../../../../core/utils/constants/sizes.dart';
 import '../../../../core/utils/theming/styles.dart';
+import '../../../shared/empty_sessions.dart';
+import '../../cubit/session_bloc.dart';
+import '../../cubit/session_state.dart';
 import '../widget/course_card.dart';
 import '../widget/header_next_sessions.dart';
 
@@ -21,6 +25,12 @@ class _AllSessionsState extends State<AllSessions> {
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    context.read<SessionCubit>().fetchSessions();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Directionality(
@@ -98,9 +108,39 @@ class _AllSessionsState extends State<AllSessions> {
                       ),
                     ),
                     verticalSpace(8),
-                    CourseCard(),
-                    verticalSpace(8),
-                    CourseCard(),
+                    BlocBuilder<SessionCubit, SessionState>(
+                      builder: (context, state) {
+                        if (state is SessionLoading) {
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        } else if (state is SessionError) {
+                          return Center(child: Text("Error loading sessions"));
+                        } else if (state is SessionLoaded) {
+                          if (state.sessions.isEmpty) {
+                            return Center(
+                              child: EmptySessions(),
+                            );
+                          } else {
+                            return Expanded(
+                              child: ListView.builder(
+                                itemCount: state.sessions.length,
+                                itemBuilder: (context, index) {
+                                  final session = state.sessions[index];
+
+                                  return Padding(
+                                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                                    child: CourseCard(session: session),
+                                  );
+                                },
+                              ),
+                            );
+                          }
+                        }
+                        return SizedBox();
+                      },
+                    ),
+
                   ],
                 ),
               ),

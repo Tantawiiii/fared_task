@@ -1,5 +1,6 @@
 import 'package:bounce/bounce.dart';
 import 'package:fared_task/core/utils/helpers/spacing.dart';
+import 'package:fared_task/features/home/data/model/session_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -7,7 +8,8 @@ import '../../../../core/utils/constants/colors.dart';
 import '../../../../core/utils/theming/styles.dart';
 
 class CourseCard extends StatelessWidget {
-  const CourseCard({super.key});
+  final Session session;
+  const CourseCard({super.key, required this.session});
 
   @override
   Widget build(BuildContext context) {

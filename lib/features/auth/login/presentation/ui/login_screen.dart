@@ -41,11 +41,13 @@ class _LoginScreenState extends State<LoginScreen> {
             listener: (context, state) {
               if (state is AuthSuccess) {
                 Navigator.pushReplacementNamed(context, '/homePage');
+                print("/homePage");
               } else if (state is AuthFailure) {
-
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(content: Text("Login Failure")),
                 );
+
+                print("/AuthFailure : ${state.message}");
               }
             },
             builder: (context, state) {

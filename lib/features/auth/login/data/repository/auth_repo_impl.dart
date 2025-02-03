@@ -27,7 +27,7 @@ class AuthRepositoryImpl implements AuthRepository {
           },
         ),
       );
-      print("Response: ${response.data}");
+    // print("Response: ${response.data}");
 
       if (response.statusCode == 200) {
         final authResponse = AuthResponse.fromJson(response.data['result']);

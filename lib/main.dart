@@ -15,7 +15,6 @@ import 'generate.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initializeDateFormatting('ar', null);
-
   final dio = Dio();
   final authRepository = AuthRepositoryImpl(dio);
   final loginUseCase = LoginUseCase(authRepository);

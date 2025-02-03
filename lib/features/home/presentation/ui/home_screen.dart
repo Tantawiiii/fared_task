@@ -10,6 +10,7 @@ import '../../../../../core/utils/constants/text_strings.dart';
 import '../../../../core/local_data/shared_preferance.dart';
 import '../../../../core/utils/theming/styles.dart';
 import '../widget/my_children_widget.dart';
+import '../widget/raiting_card.dart';
 import '../widget/subscribtion_section.dart';
 import '../widget/upcoming_sessions.dart';
 
@@ -193,6 +194,56 @@ class _HomeScreenState extends State<HomeScreen> {
                     Container(
                       color: TColors.fillBackgroundSessionsSection,
                         child: ReportsSection(),
+                    ),
+                    verticalSpace(14),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 16),
+                      color: TColors.white,
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  Text(
+                                    "التقييمات المعلقة",
+                                    style: TextStyles.font18BlackBold,
+                                  ),
+                                  horizontalSpace(2),
+                                  Container(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 6, vertical: 1),
+                                    decoration: BoxDecoration(
+                                        border: Border.all(color: Colors.blue),
+                                        borderRadius:
+                                        BorderRadius.circular(10)),
+                                    child: Text("04"),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                    "المزيد",
+                                    style: TextStyles.font16BlackBold,
+                                  ),
+                                  horizontalSpace(2),
+                                  Icon(
+                                    Icons.keyboard_arrow_left_outlined,
+                                    color: TColors.darkGrey,
+                                    size: 24,
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          verticalSpace(18),
+                          RatingCard(),
+                          verticalSpace(14),
+                        ],
+                      ),
                     ),
                   ],
                 ),
