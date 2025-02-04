@@ -167,7 +167,7 @@ class _AllSessionsState extends State<AllSessions> {
                             return selectedDate != null && sessionDate == selectedDate;
                           }).toList();
 
-                          print(selectedDate);
+
 
                           if (filteredSessions.isEmpty) {
                             return Center(child: EmptySessions());

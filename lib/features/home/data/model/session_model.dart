@@ -44,20 +44,19 @@ class Session {
       title: json['title'] ?? '',
       titleEn: json['titleEn'] ?? '',
       image: json['image'] ?? '',
-      description: json['descritbion'] ?? '',
-      shortDescription: json['shortdescritbion'] ?? '',
-      shortDescriptionEn: json['shortdescritbionEn'] ?? '',
-      date: DateTime.parse(json['date']),
+      description: json['description'] ?? '',
+      shortDescription: json['shortDescription'] ?? '',
+      shortDescriptionEn: json['shortDescriptionEn'] ?? '',
+      date: json['date'] != null ? DateTime.tryParse(json['date']) ?? DateTime.now() : DateTime.now(),
       isReported: json['isReported'] ?? false,
       reportId: json['reportId'] ?? 0,
       number: json['number'] ?? 0,
       appointmentStatus: json['appointmentStatus'] ?? 0,
       sessionId: json['sessionId'] ?? 0,
-      timeSlotId: List<int>.from(json['timeSlotId'] ?? []),
+      timeSlotId: (json['timeSlotId'] as List<dynamic>?)?.map((e) => e as int).toList() ?? [],
       students: (json['students'] as List<dynamic>?)
           ?.map((student) => Student.fromJson(student))
-          .toList() ??
-          [],
+          .toList() ?? [],
       teacher: Teacher.fromJson(json['teacher'] ?? {}),
     );
   }

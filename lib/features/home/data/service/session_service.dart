@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:fared_task/core/local_data/shared_preferance.dart';
-import 'package:flutter/foundation.dart';
 import '../../../../core/local_data/user_id_local.dart';
 import '../../../../core/networking/api_constants.dart';
 import '../model/session_model.dart';
@@ -31,9 +30,6 @@ class SessionService {
       final options = Options(headers: {'Authorization': 'Bearer $token'});
 
       final response = await _dio.get("$tSessionKey?parentId=$parentId", options: options);
-      if (kDebugMode) {
-        print("API Response: ${response.data}");
-      }
 
       if (response.statusCode == 200) {
         final responseData = response.data;

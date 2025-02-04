@@ -1,9 +1,6 @@
 import 'package:bounce/bounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-
-import '../../../../core/utils/constants/text_strings.dart';
-import '../../../../core/utils/helpers/spacing.dart';
 import '../../../../core/utils/theming/styles.dart';
 
 class HeaderNextSessions extends StatelessWidget {

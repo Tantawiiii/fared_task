@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:bounce/bounce.dart';
-import 'package:fared_task/core/utils/constants/colors.dart';
 import 'package:fared_task/core/utils/helpers/spacing.dart';
 import 'package:fared_task/core/utils/theming/styles.dart';
 import 'package:flutter/material.dart';

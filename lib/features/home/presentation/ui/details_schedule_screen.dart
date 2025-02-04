@@ -28,13 +28,22 @@ class _DetailedScheduleScreenState extends State<DetailedScheduleScreen> {
   @override
   void initState() {
     super.initState();
-    selectedDate = intl.DateFormat('d MMMM yyyy', 'ar').parse(widget.selectedDay);
+    selectedDate =
+        intl.DateFormat('d MMMM yyyy', 'ar').parse(widget.selectedDay);
     context.read<SessionCubit>().fetchSessions();
   }
 
   @override
   Widget build(BuildContext context) {
-    final arabicWeekDays = ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
+    final arabicWeekDays = [
+      'الأحد',
+      'الاثنين',
+      'الثلاثاء',
+      'الأربعاء',
+      'الخميس',
+      'الجمعة',
+      'السبت'
+    ];
 
     return Directionality(
       textDirection: TextDirection.rtl,
@@ -48,7 +57,8 @@ class _DetailedScheduleScreenState extends State<DetailedScheduleScreen> {
               Container(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height,
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+                padding:
+                const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
                 decoration: BoxDecoration(
                   color: TColors.white,
                   borderRadius: const BorderRadius.only(
@@ -56,99 +66,120 @@ class _DetailedScheduleScreenState extends State<DetailedScheduleScreen> {
                     topRight: Radius.circular(TSizes.fontSizeXl),
                   ),
                 ),
-                child: Row(
+                child: Column(
                   children: [
-                    Column(
-                      children: List.generate(24, (index) {
-                        final hourLabel = intl.DateFormat('h a', 'ar').format(DateTime(0, 0, 0, index));
-                        return Container(
-                          width: 60,
-                          height: 50,
-                          alignment: Alignment.center,
-                          child: Text(
-                            hourLabel,
-                            style: TextStyles.font12WhiteBlack.copyWith(color: TColors.grey),
-                          ),
-                        );
-                      }),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          widget.selectedDay,
+                          style: TextStyles.font20BlackExtraBold,
+                        ),
+                        DropdownButton<String>(
+                          value: 'يومي',
+                          items: ['يومي', 'أسبوعي', 'شهرى']
+                              .map((view) => DropdownMenuItem(
+                            value: view,
+                            child: Text(view),
+                          ))
+                              .toList(),
+                          onChanged: (value) {},
+                        ),
+                      ],
                     ),
-                    const VerticalDivider(width: 1),
-
-                    // Main Content
+                    const SizedBox(height: 16),
                     Expanded(
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                widget.selectedDay,
-                                style: TextStyles.font20BlackExtraBold,
-                              ),
-                              DropdownButton<String>(
-                                value: 'يومي',
-                                items: ['يومي', 'أسبوعي', 'شهرى']
-                                    .map((view) => DropdownMenuItem(
-                                  value: view,
-                                  child: Text(view),
-                                ))
-                                    .toList(),
-                                onChanged: (value) {},
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 16),
-                          SizedBox(
-                            height: 68,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: List.generate(7, (index) {
-                                DateTime day = selectedDate.add(Duration(days: index - selectedDate.weekday));
-                                bool isSelected = day.day == selectedDate.day &&
-                                    day.month == selectedDate.month &&
-                                    day.year == selectedDate.year;
+                      flex: 1,
+                      child: SizedBox(
+                        height: 68,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: List.generate(7, (index) {
+                            DateTime day = selectedDate.add(Duration(
+                                days: index - selectedDate.weekday));
+                            bool isSelected = day.day == selectedDate.day &&
+                                day.month == selectedDate.month &&
+                                day.year == selectedDate.year;
 
-                                return GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      selectedDate = day;
-                                    });
-                                  },
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        arabicWeekDays[day.weekday % 7],
-                                        style: TextStyles.font12WhiteBlack,
-                                      ),
-                                      const SizedBox(height: 8),
-                                      CircleAvatar(
-                                        radius: 16,
-                                        backgroundColor: isSelected ? TColors.headerBackground : Colors.grey[200],
-                                        child: Text(
-                                          '${day.day}',
-                                          style: TextStyle(color: isSelected ? Colors.white : Colors.black),
-                                        ),
-                                      ),
-                                    ],
+                            return GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  selectedDate = day;
+                                });
+                              },
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    arabicWeekDays[day.weekday % 7],
+                                    style: TextStyles.font12WhiteBlack,
+                                  ),
+                                  const SizedBox(height: 8),
+                                  CircleAvatar(
+                                    radius: 16,
+                                    backgroundColor: isSelected
+                                        ? TColors.headerBackground
+                                        : Colors.grey[200],
+                                    child: Text(
+                                      '${day.day}',
+                                      style: TextStyle(
+                                          color: isSelected
+                                              ? Colors.white
+                                              : Colors.black),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          }),
+                        ),
+                      ),
+                    ),
+                    const Divider(),
+                    Expanded(
+                      flex: 8,
+                      child: Row(
+                        children: [
+                          SingleChildScrollView(
+                            child: Column(
+                              children: List.generate(24, (index) {
+                                final hourLabel = intl.DateFormat('h a', 'ar')
+                                    .format(DateTime(0, 0, 0, index));
+                                return Container(
+                                  width: 60,
+                                  height: 50,
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    hourLabel,
+                                    style: TextStyles.font14BlackBold,
                                   ),
                                 );
                               }),
                             ),
                           ),
-                          const Divider(),
-
-                          // Main schedule content
+                          const VerticalDivider(width: 1),
                           Expanded(
                             child: BlocBuilder<SessionCubit, SessionState>(
                               builder: (context, state) {
                                 if (state is SessionLoading) {
                                   return CourseCardShimmer();
                                 } else if (state is SessionLoaded) {
-                                  return ListView.builder(
-                                    itemCount: state.sessions.length,
-                                    itemBuilder: (context, index) => CourseCard(session: state.sessions[index]),
-                                  );
+                                  String formattedSelectedDate = intl.DateFormat('yyyy-MM-dd').format(selectedDate);
+
+                                  final filteredSessions = state.sessions.where((session) {
+                                    String sessionDate = intl.DateFormat('yyyy-MM-dd').format(session.date);
+                                    return sessionDate == formattedSelectedDate;
+                                  }).toList();
+
+                                  return filteredSessions.isNotEmpty
+                                      ? ListView.builder(
+                                    itemCount: filteredSessions.length,
+                                    itemBuilder: (context, index) =>
+                                        CourseCard(
+                                            session:
+                                            filteredSessions[index]),
+                                  )
+                                      : const EmptySessions();
                                 } else {
                                   return const EmptySessions();
                                 }
