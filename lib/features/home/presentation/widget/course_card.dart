@@ -3,6 +3,7 @@ import 'package:fared_task/core/utils/helpers/spacing.dart';
 import 'package:fared_task/features/home/data/model/session_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../core/utils/constants/colors.dart';
 import '../../../../core/utils/theming/styles.dart';
@@ -13,6 +14,7 @@ class CourseCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Container(
       margin: const EdgeInsets.all(4.0),
       padding: const EdgeInsets.all(6.0),
@@ -69,7 +71,7 @@ class CourseCard extends StatelessWidget {
                     ),
                     verticalSpace(2),
                      Text(
-                      "أنت جزء من المجتمع",
+                      session.title,
                       style: TextStyles.font14BlackBold,
                     ),
                     verticalSpace(2),
@@ -81,7 +83,7 @@ class CourseCard extends StatelessWidget {
                             Icon(Icons.access_time, size: 18, color: Colors.grey),
                             horizontalSpace(2),
                             Text(
-                              "45 دقيقة",
+                              "${session.date.hour} ساعه",
                               style:TextStyles.font12gray,
                             ),
                           ],
@@ -92,7 +94,7 @@ class CourseCard extends StatelessWidget {
                             Icon(Icons.calendar_month, size: 18, color: Colors.grey),
                             horizontalSpace(2),
                             Text(
-                              "24 سبتمبر 2024",
+                              DateFormat('d MMMM yyyy').format(session.date),
                               style:TextStyles.font12gray,
                             ),
                           ],
@@ -100,8 +102,8 @@ class CourseCard extends StatelessWidget {
                       ],
                     ),
                     verticalSpace(2),
-                    const Text(
-                      "يتعلم طفلك العادات والمهارات التي تجعله مميزاً...",
+                     Text(
+                      session.shortDescription,
                       style: TextStyle(color: Colors.grey, fontSize: 14),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,

@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/utils/constants/colors.dart';
 import '../../../../core/utils/constants/sizes.dart';
 import '../../../../core/utils/theming/styles.dart';
+import '../../../shared/course_card_shimmer.dart';
 import '../../../shared/empty_sessions.dart';
 import '../../cubit/session_bloc.dart';
 import '../../cubit/session_state.dart';
@@ -106,28 +107,76 @@ class _AllSessionsState extends State<AllSessions> {
                           shape: BoxShape.circle,
                         ),
                       ),
+                      calendarBuilders: CalendarBuilders(
+                        markerBuilder: (context, date, events) {
+                          return BlocBuilder<SessionCubit, SessionState>(
+                            builder: (context, state) {
+                              if (state is SessionLoaded) {
+                                final sessionsCount = state.sessions.where((session) {
+                                  final sessionDate = DateTime(
+                                    session.date.year,
+                                    session.date.month,
+                                    session.date.day,
+                                  );
+                                  return isSameDay(sessionDate, date);
+                                }).length;
+
+                                if (sessionsCount > 0) {
+                                  return Positioned(
+                                    bottom: 4,
+                                    right: 4,
+                                    child: Container(
+                                      padding: EdgeInsets.all(5),
+                                      decoration: BoxDecoration(
+                                        color: Colors.red,
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: Text(
+                                        '$sessionsCount',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                }
+                              }
+                              return SizedBox();
+                            },
+                          );
+                        },
+                      ),
                     ),
+
                     verticalSpace(8),
                     BlocBuilder<SessionCubit, SessionState>(
                       builder: (context, state) {
                         if (state is SessionLoading) {
-                          return Center(
-                            child: CircularProgressIndicator(),
-                          );
+                          return CourseCardShimmer();
                         } else if (state is SessionError) {
                           return Center(child: Text("Error loading sessions"));
                         } else if (state is SessionLoaded) {
-                          if (state.sessions.isEmpty) {
-                            return Center(
-                              child: EmptySessions(),
-                            );
+                          final selectedDate = _selectedDay != null
+                              ? "${_selectedDay!.year}-${_selectedDay!.month.toString().padLeft(2, '0')}-${_selectedDay!.day.toString().padLeft(2, '0')}"
+                              : null;
+
+                          final filteredSessions = state.sessions.where((session) {
+                            final sessionDate = "${session.date.year}-${session.date.month.toString().padLeft(2, '0')}-${session.date.day.toString().padLeft(2, '0')}";
+                            return selectedDate != null && sessionDate == selectedDate;
+                          }).toList();
+
+                          print(selectedDate);
+
+                          if (filteredSessions.isEmpty) {
+                            return Center(child: EmptySessions());
                           } else {
                             return Expanded(
                               child: ListView.builder(
-                                itemCount: state.sessions.length,
+                                itemCount: filteredSessions.length,
                                 itemBuilder: (context, index) {
-                                  final session = state.sessions[index];
-
+                                  final session = filteredSessions[index];
                                   return Padding(
                                     padding: const EdgeInsets.symmetric(vertical: 8.0),
                                     child: CourseCard(session: session),
@@ -140,6 +189,7 @@ class _AllSessionsState extends State<AllSessions> {
                         return SizedBox();
                       },
                     ),
+
 
                   ],
                 ),

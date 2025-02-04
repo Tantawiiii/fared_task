@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bounce/bounce.dart';
 import 'package:fared_task/core/utils/constants/colors.dart';
 import 'package:fared_task/core/utils/helpers/spacing.dart';
@@ -40,7 +42,7 @@ class CustomCalendarRow extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: List.generate(3,
                       (index) => Container(
-                    width: 24,
+                    width: 50,
                     height: 24,
                     decoration: BoxDecoration(
                       color: Colors.white,
@@ -96,7 +98,6 @@ class CustomCalendarRow extends StatelessWidget {
                         return GestureDetector(
                           onTap: () {
                             final selectedDate = DateFormat('d MMMM yyyy', 'ar').format(DateTime.now().subtract(Duration(days: today.weekday - weekDays.indexOf(day) + 2)));
-
 
                             Navigator.push(
                               context,
@@ -155,9 +156,11 @@ class CustomCalendarRow extends StatelessWidget {
                                       itemBuilder: (context, index) {
                                         return Padding(
                                           padding: EdgeInsets.only(right: 4),
-                                          child: CircleAvatar(
+                                          child:CircleAvatar(
                                             radius: 12,
-                                            backgroundImage: NetworkImage(students[index].imageUrl),
+                                            backgroundImage: students[index].imageUrl.startsWith('http')
+                                                ? NetworkImage(students[index].imageUrl)
+                                                : FileImage(File(students[index].imageUrl)) as ImageProvider,
                                           ),
                                         );
                                       },

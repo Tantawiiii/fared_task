@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 
 import '../../../../../core/local_data/shared_preferance.dart';
+import '../../../../../core/local_data/user_id_local.dart';
 import '../../../../../core/networking/api_constants.dart';
 import '../model/login_model.dart';
 import 'login_repo.dart';
@@ -33,6 +34,8 @@ class AuthRepositoryImpl implements AuthRepository {
         final authResponse = AuthResponse.fromJson(response.data['result']);
 
         await saveToken(authResponse.accessToken);
+        await saveParentId(authResponse.userId);
+        print(authResponse.userId);
 
         return authResponse;
       } else {

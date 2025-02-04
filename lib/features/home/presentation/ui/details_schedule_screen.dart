@@ -1,3 +1,4 @@
+import 'package:fared_task/features/shared/course_card_shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart' as intl;
@@ -55,140 +56,106 @@ class _DetailedScheduleScreenState extends State<DetailedScheduleScreen> {
                     topRight: Radius.circular(TSizes.fontSizeXl),
                   ),
                 ),
-                child: Column(
+                child: Row(
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          widget.selectedDay,
-                          style: TextStyles.font20BlackExtraBold,
-                        ),
-                        DropdownButton<String>(
-                          value: 'يومي',
-                          items: ['يومي', 'أسبوعي', 'شهرى']
-                              .map((view) => DropdownMenuItem(
-                            value: view,
-                            child: Text(view),
-                          ))
-                              .toList(),
-                          onChanged: (value) {},
-                        ),
-                      ],
+                    Column(
+                      children: List.generate(24, (index) {
+                        final hourLabel = intl.DateFormat('h a', 'ar').format(DateTime(0, 0, 0, index));
+                        return Container(
+                          width: 60,
+                          height: 50,
+                          alignment: Alignment.center,
+                          child: Text(
+                            hourLabel,
+                            style: TextStyles.font12WhiteBlack.copyWith(color: TColors.grey),
+                          ),
+                        );
+                      }),
                     ),
-                    const SizedBox(height: 16),
+                    const VerticalDivider(width: 1),
 
-                    // Date Selector Row
-                    SizedBox(
-                      height: 68,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: List.generate(7, (index) {
-                          DateTime day = selectedDate.add(Duration(days: index - selectedDate.weekday));
-                          bool isSelected = day.day == selectedDate.day &&
-                              day.month == selectedDate.month &&
-                              day.year == selectedDate.year;
-
-                          return GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                selectedDate = day;
-                              });
-                            },
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  arabicWeekDays[day.weekday % 7],
-                                  style: TextStyles.font12WhiteBlack,
-                                ),
-                                const SizedBox(height: 8),
-                                CircleAvatar(
-                                  radius: 16,
-                                  backgroundColor: isSelected ? TColors.headerBackground : Colors.grey[200],
-                                  child: Text(
-                                    '${day.day}',
-                                    style: TextStyle(color: isSelected ? Colors.white : Colors.black),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
-                        }),
-                      ),
-                    ),
-                    const Divider(),
-
-                    // BlocBuilder to display sessions dynamically
+                    // Main Content
                     Expanded(
-                      child: BlocBuilder<SessionCubit, SessionState>(
-                        builder: (context, state) {
-                          if (state is SessionLoading) {
-                            return Center(
-                              child: Shimmer.fromColors(
-                                baseColor: Colors.grey[300]!,
-                                highlightColor: Colors.grey[100]!,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                  children: List.generate(
-                                    3,
-                                        (index) => Container(
-                                      width: 24,
-                                      height: 24,
-                                      decoration: const BoxDecoration(
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ),
-                                ),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                widget.selectedDay,
+                                style: TextStyles.font20BlackExtraBold,
                               ),
-                            );
-                          } else if (state is SessionError) {
-                            return Center(child: Text('Error: ${state.message}', style: TextStyles.font16BlackBold));
-                          } else if (state is SessionLoaded) {
-                            final sessions = state.sessions
-                                .where((s) =>
-                            intl.DateFormat('yyyy-MM-dd').format(DateTime.parse(s.date as String)) ==
-                                intl.DateFormat('yyyy-MM-dd').format(selectedDate))
-                                .toList();
+                              DropdownButton<String>(
+                                value: 'يومي',
+                                items: ['يومي', 'أسبوعي', 'شهرى']
+                                    .map((view) => DropdownMenuItem(
+                                  value: view,
+                                  child: Text(view),
+                                ))
+                                    .toList(),
+                                onChanged: (value) {},
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 16),
+                          SizedBox(
+                            height: 68,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: List.generate(7, (index) {
+                                DateTime day = selectedDate.add(Duration(days: index - selectedDate.weekday));
+                                bool isSelected = day.day == selectedDate.day &&
+                                    day.month == selectedDate.month &&
+                                    day.year == selectedDate.year;
 
-                            if (sessions.isEmpty) {
-                              return Center(
-                                child: EmptySessions(),
-                              );
-                            }
-
-                            return ListView.builder(
-                              itemCount: sessions.length,
-                              itemBuilder: (context, index) {
-                                final session = sessions[index];
-
-                                return Container(
-                                  height: 144,
-                                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                                  child: Stack(
+                                return GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      selectedDate = day;
+                                    });
+                                  },
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          intl.DateFormat('hh:mm a').format(DateTime.parse(session.date as String)),
-                                          style: TextStyles.font12WhiteBlack,
-                                        ),
+                                      Text(
+                                        arabicWeekDays[day.weekday % 7],
+                                        style: TextStyles.font12WhiteBlack,
                                       ),
-                                      Positioned(
-                                        left: 40,
-                                        right: 8,
-                                        top: 0,
-                                        child: CourseCard(session: session),
+                                      const SizedBox(height: 8),
+                                      CircleAvatar(
+                                        radius: 16,
+                                        backgroundColor: isSelected ? TColors.headerBackground : Colors.grey[200],
+                                        child: Text(
+                                          '${day.day}',
+                                          style: TextStyle(color: isSelected ? Colors.white : Colors.black),
+                                        ),
                                       ),
                                     ],
                                   ),
                                 );
+                              }),
+                            ),
+                          ),
+                          const Divider(),
+
+                          // Main schedule content
+                          Expanded(
+                            child: BlocBuilder<SessionCubit, SessionState>(
+                              builder: (context, state) {
+                                if (state is SessionLoading) {
+                                  return CourseCardShimmer();
+                                } else if (state is SessionLoaded) {
+                                  return ListView.builder(
+                                    itemCount: state.sessions.length,
+                                    itemBuilder: (context, index) => CourseCard(session: state.sessions[index]),
+                                  );
+                                } else {
+                                  return const EmptySessions();
+                                }
                               },
-                            );
-                          }
-                          return const Center(child: Text("حدث خطأ ما"));
-                        },
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],

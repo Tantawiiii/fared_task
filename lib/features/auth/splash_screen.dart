@@ -1,3 +1,4 @@
+import 'package:fared_task/core/local_data/user_id_local.dart';
 import 'package:fared_task/core/utils/constants/colors.dart';
 import 'package:fared_task/core/utils/constants/sizes.dart';
 import 'package:fared_task/features/auth/onboarding_screen.dart';
@@ -28,8 +29,10 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future<void> _checkLoginStatus() async {
     final token = await getAccessToken();
+    final ParentId = await getParentId();
 
     print("Checking token: Done");
+    print("Checking ParentId: $ParentId");
     Future.delayed(Duration(seconds: 3), () {
       if (token != null && token.isNotEmpty) {
         Navigator.pushReplacement(

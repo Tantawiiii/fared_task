@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import 'core/routing/app_router.dart';
@@ -18,7 +19,7 @@ void main() async {
   final dio = Dio();
   final authRepository = AuthRepositoryImpl(dio);
   final loginUseCase = LoginUseCase(authRepository);
-
+  Intl.defaultLocale = 'ar_SA';
 
   runApp(
     MultiProvider(
