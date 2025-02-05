@@ -49,8 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     ];
 
-
-    void _onTabSelected(int index) async {
+    void onTabSelected(int index) async {
       if (index == 4) {
         await clearAccessToken();
         if (!mounted) return;
@@ -61,7 +60,6 @@ class _HomeScreenState extends State<HomeScreen> {
         });
       }
     }
-
 
     return Directionality(
       textDirection: TextDirection.rtl,
@@ -258,7 +256,7 @@ class _HomeScreenState extends State<HomeScreen> {
           colorSelected: TColors.iconSelect,
           indexSelected: visit,
           paddingVertical: 24,
-          onTap:_onTabSelected,
+          onTap:onTabSelected,
         ),
       ),
     );

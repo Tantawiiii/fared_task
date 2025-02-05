@@ -189,11 +189,11 @@ class _AllSessionsState extends State<AllSessions> {
                         return SizedBox();
                       },
                     ),
-
-
+                    verticalSpace(18),
                   ],
                 ),
               ),
+
             ],
           ),
         ),

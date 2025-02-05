@@ -19,7 +19,7 @@ class CustomCalendarRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final today = DateTime.now();
     final weekDays = List.generate(7, (index) {
-      final day = today.subtract(Duration(days: today.weekday - index +2));
+      final day = today.subtract(Duration(days: today.day - index - 2));
       return {
         'day': _getArabicDayName(day),
         'date': DateFormat('d').format(day),
@@ -143,29 +143,32 @@ class CustomCalendarRow extends StatelessWidget {
                               ),
                               if (isSelected)
                                 Positioned(
-                                  bottom: -8,
+                                  bottom: -16,
                                   left: 0,
                                   right: 0,
                                   child: SizedBox(
                                     height: 50,
-                                    child: ListView.builder(
-                                      scrollDirection: Axis.horizontal,
-                                      shrinkWrap: true,
-                                      itemCount: students.length,
-                                      itemBuilder: (context, index) {
-                                        return Padding(
-                                          padding: EdgeInsets.only(right: 4),
-                                          child:CircleAvatar(
+                                    child: Stack(
+                                      children: students.asMap().entries.map((entry) {
+                                        int index = entry.key;
+                                        var student = entry.value;
+                                        File imageFile = File(student.imageUrl);
+
+                                        return Positioned(
+                                          left: index * 16.0,
+                                          child: CircleAvatar(
                                             radius: 12,
-                                            backgroundImage: students[index].imageUrl.startsWith('http')
-                                                ? NetworkImage(students[index].imageUrl)
-                                                : FileImage(File(students[index].imageUrl)) as ImageProvider,
+                                            backgroundImage: imageFile.existsSync()
+                                                ? FileImage(imageFile)
+                                                : const AssetImage("assets/images/kid1.jpg") as ImageProvider,
                                           ),
                                         );
-                                      },
+                                      }).toList(),
                                     ),
                                   ),
                                 ),
+
+
                             ],
                           ),
                         );
